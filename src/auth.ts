@@ -12,6 +12,7 @@ export const authenticate = (req: Request, res: Response, next: NextFunction) =>
     (req as any).user = decoded;
     next();
   } catch (ex) {
+    logger.error(`Error: ${ex}, incoming token: ${token}`)
     res.status(400).send('Invalid token.');
   }
 };

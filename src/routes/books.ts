@@ -1,20 +1,23 @@
 import { Router, Request, Response } from 'express';
-import logger from './logger';
-import { Book } from './models';
-import { authenticate, authorize } from './auth';
+import logger from '../logger';
+import { Book } from '../models/bookSchema';
+import { authenticate, authorize } from '../auth';
 
 const router = Router();
 
 router.get('/', async (req: Request, res: Response) => {
+  logger.info(`Incoming request for GET /books`)
   const books = await Book.find();
   res.json(books);
 });
 
 router.get('/:id', async (req: Request, res: Response) => {
+  logger.info(`Incoming request for some book with id:${req.params.id}`)
   const book = await Book.findById(req.params.id);
   if (book) {
     res.json(book);
   } else {
+    logger.error("Book not found")
     res.status(404).send('Book not found');
   }
 });
@@ -32,6 +35,7 @@ router.put('/:id', authenticate, authorize('Admin'), async (req: Request, res: R
     logger.info(`Updated book with id ${req.params.id}: ${JSON.stringify(updatedBook)}`);
     res.json(updatedBook);
   } else {
+    logger.error(`Book not found`)
     res.status(404).send('Book not found');
   }
 });

@@ -1,10 +1,10 @@
 import { Router, Request, Response } from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import logger from './logger';
-import { User } from './models';
-import { authenticate, authorize } from './auth';
-import { sendEmailConfirmation } from './mailer';
+import logger from '../logger';
+import { User } from '../models/userSchema';
+import { authenticate, authorize } from '../auth';
+import { sendEmailConfirmation } from '../mailer';
 
 const router = Router();
 
