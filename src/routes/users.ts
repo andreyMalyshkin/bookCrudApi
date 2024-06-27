@@ -26,6 +26,7 @@ router.post('/login', async (req: Request, res: Response) => {
     logger.info(`User logged in: ${username}`);
     res.json({ token });
   } else {
+    logger.info(`User logged in: ${username} with invalid creds`);
     res.status(401).send('Invalid credentials');
   }
 });
@@ -35,6 +36,7 @@ router.get('/me', authenticate, async (req: Request, res: Response) => {
   if (user) {
     res.json(user);
   } else {
+    logger.info(`User not found: ${req.params.id}`);
     res.status(404).send('User not found');
   }
 });
@@ -46,6 +48,7 @@ router.put('/:id/role', authenticate, authorize('Admin'), async (req: Request, r
     logger.info(`Updated role for user with id ${req.params.id}: ${role}`);
     res.json(updatedUser);
   } else {
+    logger.error(`User not found id:${req.params.id}`)
     res.status(404).send('User not found');
   }
 });

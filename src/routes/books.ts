@@ -46,6 +46,7 @@ router.delete('/:id', authenticate, authorize('Admin'), async (req: Request, res
     logger.info(`Deleted book with id ${req.params.id}`);
     res.status(204).send();
   } else {
+    logger.error(`Book not found id: ${req.params.id}`)
     res.status(404).send('Book not found');
   }
 });

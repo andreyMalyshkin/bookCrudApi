@@ -1,4 +1,5 @@
 import nodemailer from 'nodemailer';
+import logger from "./logger";
 
 export const sendEmailConfirmation = (email: string) => {
   const transporter = nodemailer.createTransport({
@@ -20,6 +21,6 @@ export const sendEmailConfirmation = (email: string) => {
     if (error) {
       return console.log(error);
     }
-    console.log('Email sent: ' + info.response);
+    logger.info('Email sent: ' + info.response);
   });
 };
